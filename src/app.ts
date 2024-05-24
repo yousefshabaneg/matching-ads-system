@@ -6,6 +6,8 @@ import AppError from "./shared/helpers/AppError";
 import globalErrorHandler from "./shared/middlewares/error.middleware";
 import UserRouter from "./modules/user/user.route";
 import AuthRouter from "./modules/auth/auth.route";
+import PropertyRequestRouter from "./modules/propertyRequest/propertyRequest.route";
+import AdsRouter from "./modules/ads/ads.route";
 
 class App {
   public express: Application;
@@ -25,6 +27,8 @@ class App {
   }
 
   private routes(): void {
+    this.express.use("/property", PropertyRequestRouter);
+    this.express.use("/ads", AdsRouter);
     this.express.use("/auth", AuthRouter);
     this.express.use("/user", UserRouter);
   }

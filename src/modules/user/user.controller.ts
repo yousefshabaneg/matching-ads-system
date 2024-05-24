@@ -4,6 +4,8 @@ import catchAsync from "../../shared/helpers/catchAsync";
 import HelperFunctions from "../../shared/services/HelperFunctions.service";
 import UserRoles from "../../shared/types/userRoles.enum";
 import UserStatus from "../../shared/types/userStatus.enum";
+import AppError from "../../shared/helpers/AppError";
+import ApiStatus from "../../shared/types/apiStatus.enum";
 
 class UserController {
   static userFactory = new ApiFactory("userController", UserModel);
@@ -12,7 +14,25 @@ class UserController {
   static getUserById = this.userFactory.getOne();
   static createUser = this.userFactory.createOne();
   static updateUser = this.userFactory.updateOne();
-  static deleteUser = this.userFactory.deleteOne();
+  static deleteUser = catchAsync(async (req, res, next) => {
+    const user = await UserModel.findByIdAndUpdate(req.params.id, {
+      status: UserStatus.DELETED,
+    });
+    if (!user) {
+      return next(AppError.NotFoundException(`No user found with this ID`));
+    }
+
+    this.userFactory.logger.log(
+      "info",
+      `User Deleted by id: ${req.params.id}`,
+      user
+    );
+
+    res.status(204).json({
+      status: ApiStatus.SUCCESS,
+      message: "Delete Successfully",
+    });
+  });
 
   static stats = catchAsync(async (req, res, next) => {
     const pagination = await HelperFunctions.getPaginationFromQueryAndModel(
