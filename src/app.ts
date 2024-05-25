@@ -27,6 +27,9 @@ class App {
   }
 
   private routes(): void {
+    this.express.get("/", (req, res) =>
+      res.status(200).json({ message: "MatchingAds Server is running!" })
+    );
     this.express.use("/property", PropertyRequestRouter);
     this.express.use("/ads", AdsRouter);
     this.express.use("/auth", AuthRouter);

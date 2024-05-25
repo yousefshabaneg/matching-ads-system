@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import catchAsync from "../../shared/helpers/catchAsync";
 import AppError from "../../shared/helpers/AppError";
 import UserModel from "../user/user.model";
-import { UserRoleType } from "../../shared/types/userRoles.enum";
+import UserRoles, { UserRoleType } from "../../shared/types/userRoles.enum";
 
 class AuthMiddleware {
   static protect = catchAsync(
@@ -43,7 +43,8 @@ class AuthMiddleware {
 
   static restrictTo = (...roles: UserRoleType[]) => {
     return catchAsync(async (req, res, next) => {
-      if (!roles.includes(req.user.role)) {
+      console.log(req.user.role);
+      if (req.user.role !== UserRoles.ADMIN && !roles.includes(req.user.role)) {
         return next(
           AppError.NotAuthorizedException(
             "You do not have permission to perform this action"

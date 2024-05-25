@@ -62,7 +62,7 @@ const ErrorMiddleware = (
 
   // 1) Log error
   logger.log("error", err.message, err);
-  if (config.nodeEnv === "development") {
+  if (config.nodeEnv === "development" || config.nodeEnv === "test") {
     sendErrorDev(err, req, res);
   } else if (config.nodeEnv === "production") {
     let error = { ...err };

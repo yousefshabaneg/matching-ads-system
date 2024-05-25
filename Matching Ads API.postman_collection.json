@@ -1,0 +1,521 @@
+{
+	"info": {
+		"_postman_id": "feafcf9c-a7c9-4bd1-a1a5-b242f26bb05c",
+		"name": "Matching Ads API",
+		"description": "## **The** Matching Ads API **Documentaion**\n\nThis API contains endpoints that connects property requests with relevant ads based on specific criteria.\n\nLive version here [https://supermarket-backend-sxx3.onrender.com/](https://supermarket-backend-sxx3.onrender.com/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15622340"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ADMIN\",\r\n    \"phone\": \"01234567890\",\r\n    \"role\": \"ADMIN\",\r\n    \"password\":\"12345678\",\r\n    \"passwordConfirm\":\"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Auth}}/signup",
+							"host": [
+								"{{Auth}}"
+							],
+							"path": [
+								"signup"
+							]
+						},
+						"description": "Sign up providing your name, phone and password with passwordConfirm.\n\nThe phone must be unique (never used to create an account before)."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"phone\": \"01234567890\",\r\n    // \"phone\": \"01234567891\",\r\n    \"phone\": \"01234567891\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Auth}}/login",
+							"host": [
+								"{{Auth}}"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "Login using your phone and password. you will receive the token and it is valid for 14 Days by default."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for Authentication Service that contains:\n\n1. Login Route\n    \n2. Signup Route"
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "GET ALL Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Users}}",
+							"host": [
+								"{{Users}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL Ads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Ads}}",
+							"host": [
+								"{{Ads}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET ALL Property Requests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PropertyRequest}}",
+							"host": [
+								"{{PropertyRequest}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Users Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Users}}/stats",
+							"host": [
+								"{{Users}}"
+							],
+							"path": [
+								"stats"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Users}}/664d0db803c895a640a6649e",
+							"host": [
+								"{{Users}}"
+							],
+							"path": [
+								"664d0db803c895a640a6649e"
+							]
+						},
+						"description": "Get a user passing his id as a parameter. Only admins can perform this action."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User By Id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Yousef\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Users}}/664e3a5bb8cc9cb4d3ab80f7",
+							"host": [
+								"{{Users}}"
+							],
+							"path": [
+								"664e3a5bb8cc9cb4d3ab80f7"
+							]
+						},
+						"description": "Admins are also able to edit every user passing in their id. Regular users can't use this route,"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Users}}/664e3a5bb8cc9cb4d3ab80f7",
+							"host": [
+								"{{Users}}"
+							],
+							"path": [
+								"664e3a5bb8cc9cb4d3ab80f7"
+							]
+						},
+						"description": "Passing in the user id, admins are able to delete users. Expect a 204 No Content status code and no data back."
+					},
+					"response": []
+				}
+			],
+			"description": "All users (admin-client-agent) CRUD Operations that only Accessible for admin to make and changes in users table.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{adminJwt}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Create Property Request For Client",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{clientJwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"propertyType\": \"APARTMENT\",\r\n    \"price\": \"19000\",\r\n    \"district\":\"kafr abdo\",\r\n    \"city\":\"alex\",\r\n    \"area\": \"alex\",\r\n    \"userId\":\"665227455f2c781117becc92\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PropertyRequest}}/clientRequest",
+							"host": [
+								"{{PropertyRequest}}"
+							],
+							"path": [
+								"clientRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Property Request For Client",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"price\": 201000,\r\n    \"area\": \"gharbia\",\r\n    \"description\": \"Hello World!\"   \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PropertyRequest}}/clientRequest/6652286c530bc99ca3f81c01",
+							"host": [
+								"{{PropertyRequest}}"
+							],
+							"path": [
+								"clientRequest",
+								"6652286c530bc99ca3f81c01"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{clientJwt}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Agents",
+			"item": [
+				{
+					"name": "Create Ads",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"propertyType\": \"APARTMENT\",\r\n    \"price\": \"19000\",\r\n    \"district\":\"kafr abdo\",\r\n    \"city\":\"alex\",\r\n    \"area\": \"alex\",\r\n    \"description\":\"nice description\",\r\n    \"userId\":\"665227385f2c781117becc90\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Ads}}",
+							"host": [
+								"{{Ads}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMatchedProperties",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Ads}}/match/66522914530bc99ca3f81c09",
+							"host": [
+								"{{Ads}}"
+							],
+							"path": [
+								"match",
+								"66522914530bc99ca3f81c09"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{agentJwt}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{jwt}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Base_Url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		},
+		{
+			"key": "Users",
+			"value": "{{Base_Url}}/user",
+			"type": "string"
+		},
+		{
+			"key": "Auth",
+			"value": "{{Base_Url}}/auth",
+			"type": "string"
+		},
+		{
+			"key": "jwt",
+			"value": ""
+		},
+		{
+			"key": "PropertyRequest",
+			"value": "{{Base_Url}}/property",
+			"type": "string"
+		},
+		{
+			"key": "Ads",
+			"value": "{{Base_Url}}/ads",
+			"type": "string"
+		},
+		{
+			"key": "agentJwt",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InBob25lIjoiMDEyMzQ1Njc4OTIiLCJpZCI6IjY2NTIyNzM4NWYyYzc4MTExN2JlY2M5MCIsInJvbGUiOiJBR0VOVCJ9LCJpYXQiOjE3MTY2NjAxODUsImV4cCI6MTcxNzg2OTc4NX0.DPBl8a5mJAQJgkVZUd7jFQeftCcKZoySuGhBidE-gls",
+			"type": "string"
+		},
+		{
+			"key": "clientJwt",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InBob25lIjoiMDEyMzQ1Njc4OTEiLCJpZCI6IjY2NTIyNzQ1NWYyYzc4MTExN2JlY2M5MiIsInJvbGUiOiJDTElFTlQifSwiaWF0IjoxNzE2NjYwMjMyLCJleHAiOjE3MTc4Njk4MzJ9.tcPteypM1oDs9qXdXji_c67UXYTz63la_8lcDFN3vSo",
+			"type": "string"
+		},
+		{
+			"key": "adminJwt",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InBob25lIjoiMDEyMzQ1Njc4OTAiLCJpZCI6IjY2NTIyNzU2NWYyYzc4MTExN2JlY2M5NCIsInJvbGUiOiJBRE1JTiJ9LCJpYXQiOjE3MTY2NjAwOTgsImV4cCI6MTcxNzg2OTY5OH0.w-cHkJ_ImQchMj3GXqlwf5mGAj3vuRho36nwlD4rJNA",
+			"type": "string"
+		}
+	]
+}

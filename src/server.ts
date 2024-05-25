@@ -3,6 +3,8 @@ import InitializeMongoose from "./shared/config/database";
 import app from "./app";
 import http from "http";
 import LoggerService from "./shared/services/Logger.service";
+import "./modules/propertyRequest/cronJob";
+
 const logger = new LoggerService("server");
 
 process.on("uncaughtException", (err: Error) => {
@@ -29,3 +31,5 @@ process.on("unhandledRejection", (err: Error) => {
     });
   }
 });
+
+export default server;

@@ -14,4 +14,8 @@ const InitializeMongoose = () =>
       logger.log("error", err.message, err);
     });
 
+export const closeConnection = async () => {
+  await mongoose.disconnect();
+};
+
 export default InitializeMongoose;
