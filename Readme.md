@@ -15,7 +15,6 @@ This project is a property matching system that connects property requests with 
 - [Testing](#testing)
 - [Docker](#docker)
 - [Postman Documentation](#postman-documentation)
-- [License](#license)
 
 ## Overview
 
@@ -266,3 +265,73 @@ DEFAULT_PAGE_NUMBER=1
 DEFAULT_PAGE_SIZE=20
 
 ```
+
+## Testing
+
+To run tests, use the following command:
+
+npm test
+
+### Integration Tests
+
+Integration tests are written using Mocha. You can find them in the test directory.
+
+## Docker
+
+You can run the entire application using Docker. Make sure you have Docker and Docker Compose installed.
+
+### Docker Compose
+
+a docker-compose.yml file:
+
+```yml
+version: "3.8"
+
+services:
+backend:
+build: .
+depends_on: - db
+ports: - 3000:3000
+environment:
+DATABASE_URI: mongodb://db/matchingAds
+command: ./docker-entrypoint.sh
+volumes: - .:/app
+
+db:
+image: mongo:4.0-xenial
+ports: - 27017:27017
+volumes: - matchingAds:/data/db
+
+volumes:
+matchingAds:
+```
+
+### Dockerfile
+
+```yml
+FROM node:18.20-alpine3.19
+
+RUN addgroup app && adduser -S -G app app
+USER app
+
+WORKDIR /app
+COPY package\*.json ./
+RUN npm install
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+### Running the Application
+
+To start the application using Docker Compose, run:
+
+```bash
+docker-compose up --build
+```
+
+## Postman Documentation
+
+You can find the Postman documentation here: [Postman](https://documenter.getpostman.com/view/15622340/2sA3QqgYnj)

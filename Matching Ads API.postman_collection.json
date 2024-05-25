@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "feafcf9c-a7c9-4bd1-a1a5-b242f26bb05c",
 		"name": "Matching Ads API",
-		"description": "## **The** Matching Ads API **Documentaion**\n\nThis API contains endpoints that connects property requests with relevant ads based on specific criteria.\n\nLive version here [https://supermarket-backend-sxx3.onrender.com/](https://supermarket-backend-sxx3.onrender.com/)",
+		"description": "## **The** Matching Ads API **Documentaion**\n\nThis API contains endpoints that connects property requests with relevant ads based on specific criteria.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "15622340"
 	},
